@@ -23,12 +23,18 @@ This repository aims to:
 
 ---
 
-### Contents of Each Week
+## 📚 Structure Overview
+This repository is organized into **weekly learning modules**, each focusing on a key backend engineering concept.  
+Every week includes:
+- A dedicated `README.md` explaining the theory, design patterns, and key takeaways.  
+- A `src/` folder containing example code, experiments, and exercises for hands-on practice.
 
-- **README.md** → Notes, theory, usage examples, and insights for the week  
-- **src/** → Minimal and practical example code demonstrating the topic  
-
----
+### 🗂 Example Modules
+| Week | Topic | Focus |
+|------|--------|--------|
+| 01 | Layered Architecture | Understanding separation of concerns, service layers, and controller-service-repository design |
+| 02 | Async & Threading | Building concurrent and parallel backend processes efficiently |
+| 03 | Cache & Redis | Improving performance using caching strategies and Redis implementation |
 
 ## 🧩 Topics
 
