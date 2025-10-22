@@ -1,6 +1,6 @@
 # 🧱 Week-01 Layered Architecture
 
-![Katmanlı Mimari Şeması](images/1_Fj3nKsTmQ86cFL9GrvYu1g.png)
+![Katmanlı Mimari Şeması](src/images/1_Fj3nKsTmQ86cFL9GrvYu1g.png)
 
 
 ## 📘 Definition
