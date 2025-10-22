@@ -26,7 +26,7 @@ This repository aims to:
 ## 📚 Structure Overview
 This repository is organized into **weekly learning modules**, each focusing on a key backend engineering concept.  
 Every week includes:
-- A dedicated `README.md` explaining the theory, design patterns, and key takeaways.  
+- A dedicated `week-{$number_of_week}.md` explaining the theory, design patterns, and key takeaways.  
 - A `src/` folder containing example code, experiments, and exercises for hands-on practice.
 
 ### 🗂 Example Modules
@@ -76,7 +76,7 @@ Every week includes:
 
 1. **Research** → Study the topic, take notes  
 2. **Implement** → Create a minimal example in `src/`  
-3. **Document** → Write what was learned, industry applications, and challenges in `README.md`  
+3. **Document** → Write what was learned, industry applications, and challenges in `week-{$number_of_week}.md`  
 
 ---
 
@@ -84,7 +84,7 @@ Every week includes:
 
 - Each folder can be explored and run independently  
 - Code examples are **minimal** and focus on demonstrating the concept  
-- `README.md` files contain **theory, advantages, and real-world applications**  
+- `week-{$number_of_week}.md` files contain **theory, advantages, and real-world applications**  
 
 ---
 
