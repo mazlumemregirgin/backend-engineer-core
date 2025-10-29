@@ -1,0 +1,162 @@
+# Understanding Async, Sync, and Multithreading in Modern Programming
+
+Modern software often needs to perform multiple tasks at the same time,
+from fetching data over the network to performing complex computations.
+But how can programs handle these tasks efficiently without slowing down
+or blocking the user experience? In this article, we explore the
+fundamentals of synchronous (sync) and asynchronous (async) execution,
+as well as multithreading. We'll explain when to use each approach and
+clarify the difference between concurrency and parallelism, with clear
+examples and code demonstrations to help you understand these key
+concepts.
+
+## What is a thread?
+
+![Alt metin](/week-02-async-threading/images/1.png)
+
+
+A thread is the smallest unit of execution within a program. Every
+program (process) has at least one thread, usually called the main
+thread. A thread is a logical unit that allows the CPU to execute
+code, and it exists regardless of whether the code is synchronous or
+asynchronous.
+
+---
+In modern programming, tasks can be executed either synchronously (sync) or asynchronously (async). In synchronous execution, operations run one after another, meaning each task waits for the previous one to finish. In contrast, asynchronous execution allows certain tasks to start without waiting, enabling the CPU to handle other operations during waiting periods.
+
+![Alt metin](/week-02-async-threading/images/2.png)
+
+
+## Synchronous (Sync) programming
+
+In synchronous execution, operations run one after another in sequence.
+Each operation waits for the previous one to complete.
+
+Example (pseudo-code):
+
+```python
+# Synchronous example (pseudo-code)
+data = fetchFromWebsite()  # Fetch data from a website - ~2 seconds
+saveToDB(data)             # Save user to DB - ~3 seconds
+# Total time ≈ 2 + 3 = 5 seconds (blocking)
+```
+
+In this example the CPU is effectively idle while waiting for network
+I/O to complete, and the next line cannot execute until the previous
+one finishes.
+
+## Asynchronous (Async) programming
+
+Async programming prevents the CPU from idling during long operations
+by allowing tasks to start without waiting for others to finish. Many
+languages provide async/await or similar constructs to express this.
+
+Example (pseudo-code):
+
+```python
+# Asynchronous example (pseudo-code)
+task1 = fetchFromWebsite()  # ~2 seconds
+task2 = saveToDB()          # ~3 seconds
+# Both operations start concurrently; total time ≈ max(2, 3) = 3 seconds
+```
+
+Note: async achieves concurrency (handling multiple tasks logically at
+the same time) but does not necessarily run tasks in parallel on
+multiple CPU cores.
+
+## Sync vs Async — When to use
+
+Use synchronous code for simple, quick, CPU-bound operations where
+waiting is minimal. Use asynchronous code for I/O-bound operations such
+as network requests, file I/O, or database queries where waiting times
+are significant. Async improves responsiveness by allowing the program
+to do useful work while awaiting I/O.
+
+## Multithreading and parallelism
+
+While async improves efficiency for I/O-bound tasks on a single thread,
+multithreading is used for CPU-bound work or when true parallelism is
+required.
+
+![Alt metin](/week-02-async-threading/images/3.png)
+
+
+Multithreading runs multiple threads within a single program. If the
+machine has multiple CPU cores, threads can run in true parallel; if
+there are more threads than cores, the OS scheduler time-slices them to
+achieve concurrency.
+
+Simple analogy:
+- Single thread = 1 chef cooking all dishes sequentially
+- Async = 1 chef cooking dishes sequentially but using idle/wait times
+	efficiently
+- Multithreading = 4 chefs cooking 4 dishes at the same time (parallel)
+
+Example (Python threading):
+
+```python
+import threading
+import time
+
+def fetch_web():
+		print("Web fetch started")
+		time.sleep(2)
+		print("Web fetch finished")
+
+def fetch_db():
+		print("DB fetch started")
+		time.sleep(3)
+		print("DB fetch finished")
+
+# Create threads
+t1 = threading.Thread(target=fetch_web)
+t2 = threading.Thread(target=fetch_db)
+
+# Start threads
+t1.start()
+t2.start()
+
+# Wait for threads to finish
+t1.join()
+t2.join()
+
+print("All tasks completed")
+```
+
+If the CPU has two cores, each core can run one thread and the example
+may finish in roughly 3 seconds (true parallelism). If not, the OS may
+time-slice the threads.
+
+## Comparing execution timelines
+
+From the examples above: synchronous execution took ~5 seconds, async
+concurrency reduced it to ~3 seconds (the longest task), and
+multithreading can also achieve ~3 seconds when threads run in
+parallel. However, similar timings do not mean the mechanisms are the
+same.
+
+![Alt metin](/week-02-async-threading/images/4.png)
+
+
+## Concurrency vs Parallelism: do equal delays mean equal behavior?
+
+Although async and multithreading can both reduce total runtime in the
+examples, the underlying behavior differs:
+
+- Async: single-threaded concurrency — great for I/O-bound workloads.
+- Multithreading: multiple threads — can provide true parallelism for
+	CPU-bound workloads (limited by CPU cores).
+
+Choose the model that matches the problem: use async for I/O-bound
+concurrency and multithreading (or multiprocessing) for CPU-bound
+parallelism.
+
+## Conclusion
+
+Choosing the right execution model affects performance and
+responsiveness. Synchronous execution is simple and fine for short,
+sequential tasks. Asynchronous execution allows a single thread to
+handle I/O-bound operations efficiently by using waiting times (concurrency).
+Multithreading leverages multiple threads to perform CPU-bound tasks in
+parallel, taking advantage of multiple CPU cores. Understanding these
+concepts helps you write efficient and scalable programs.
